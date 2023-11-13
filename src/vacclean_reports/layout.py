@@ -8,6 +8,10 @@ from vacclean_reports.components.main_chart import (
     main_chart,
     metric_radio,
 )
+from vacclean_reports.components.sellers import (
+    top_sellers_chart,
+    top_sellers_n_sku_chart,
+)
 from vacclean_reports.components.themes import theme_changer
 from vacclean_reports.components.top_items import table_info, top_items_chart
 
@@ -45,6 +49,12 @@ app.layout = dbc.Container(
                     start_collapsed=True,
                 )
             )
+        ),
+        dbc.Row(
+            [
+                dbc.Col(top_sellers_n_sku_chart(), width=8),
+                dbc.Col(top_sellers_chart(), width=4),
+            ]
         ),
         dbc.Row(
             dbc.Col(theme_changer, width=2),

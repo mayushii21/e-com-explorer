@@ -52,7 +52,7 @@ def table_info():
     Input(ThemeChangerAIO.ids.radio("theme"), "value"),
 )
 @data_access
-def update_main_chart(
+def update_items_chart_n_table(
     df,
     metric,
     agg_m,
