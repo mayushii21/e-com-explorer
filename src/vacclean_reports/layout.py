@@ -9,6 +9,7 @@ from vacclean_reports.components.main_chart import (
     metric_radio,
 )
 from vacclean_reports.components.themes import theme_changer
+from vacclean_reports.components.top_items import table_info, top_items_chart
 
 # Pool (combine) the layout
 app.layout = dbc.Container(
@@ -24,8 +25,27 @@ app.layout = dbc.Container(
             ],
             align="center",
             # justify="between",
+            style={
+                "position": "-webkit-sticky",
+                # "position": "sticky",
+                "top": 0,
+            },
         ),
         dbc.Row(dbc.Col(main_chart())),
+        dbc.Row(dbc.Col(top_items_chart())),
+        dbc.Row(
+            dbc.Col(
+                dbc.Accordion(
+                    [
+                        dbc.AccordionItem(
+                            table_info(),
+                            title="Таблица топ товаров",
+                        ),
+                    ],
+                    start_collapsed=True,
+                )
+            )
+        ),
         dbc.Row(
             dbc.Col(theme_changer, width=2),
         ),
