@@ -13,6 +13,7 @@ def agg_dd():
         options=[
             {"label": "Общ. (сумма)", "value": "sum"},
             {"label": "Среднее", "value": "mean"},
+            {"label": "Медиана", "value": "median"},
         ],
         value="mean",
         clearable=False,
