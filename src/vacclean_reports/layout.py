@@ -1,4 +1,5 @@
 import dash_bootstrap_components as dbc
+from dash import html
 
 from vacclean_reports.app import app
 from vacclean_reports.components.main_chart import (
@@ -12,6 +13,9 @@ from vacclean_reports.components.themes import theme_changer
 # Pool (combine) the layout
 app.layout = dbc.Container(
     [
+        dbc.Row(
+            dbc.Col(html.H1("Wildberries Dashboard", style={"textAlign": "center"}))
+        ),
         dbc.Row(
             [
                 dbc.Col(agg_dd(), width=2),
