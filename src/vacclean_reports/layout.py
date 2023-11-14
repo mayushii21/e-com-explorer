@@ -14,14 +14,17 @@ from vacclean_reports.components.sellers import (
     top_sellers_n_sku_chart,
 )
 from vacclean_reports.components.themes import theme_changer
+from vacclean_reports.components.toggle import toggle
 from vacclean_reports.components.top_items import table_info, top_items_chart
 
 # Pool (combine) the layout
 app.layout = dbc.Container(
     [
+        # Title row
         dbc.Row(
             dbc.Col(html.H1("Wildberries Dashboard", style={"textAlign": "center"}))
         ),
+        # Sticky row with selection options
         dbc.Row(
             [
                 dbc.Col(agg_dd(), width=2),
@@ -29,12 +32,14 @@ app.layout = dbc.Container(
                 dbc.Col(element_dd(), width=4),
             ],
             align="center",
-            # justify="between",
-            style={"position": "sticky", "top": 0, "zIndex": 100},
+            style={"position": "sticky", "top": 0, "zIndex": 1},
             className="bg-body",  # remove transparency of row
         ),
+        # First chart
         dbc.Row(dbc.Col(main_chart())),
+        # Chart with top items
         dbc.Row(dbc.Col(top_items_chart())),
+        # Table in dropdown accordion
         dbc.Row(
             dbc.Col(
                 dbc.Accordion(
@@ -48,18 +53,25 @@ app.layout = dbc.Container(
                 )
             )
         ),
+        # Sunburst and horizontal bar chart for top sellers and their items
         dbc.Row(
             [
                 dbc.Col(top_sellers_n_sku_chart(), width=6),
                 dbc.Col(top_sellers_chart(), width=6),
             ]
         ),
+        # Top brands chart
         dbc.Row(dbc.Col(top_brands_chart())),
+        # Theme changer button
         dbc.Row(
-            dbc.Col(theme_changer, width=2),
+            [
+                dbc.Col(theme_changer, width=2),
+                dbc.Col(toggle(), width=3),
+            ],
+            justify="between",
+            style={"position": "sticky", "bottom": 0, "zIndex": 1},
         ),
     ],
     fluid=True,
     class_name="dbc",  # element colors
-    # style={"height": "100%", "width": "100%", "margin": 0, "overflow": "hidden"},
 )
