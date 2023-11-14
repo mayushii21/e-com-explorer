@@ -33,9 +33,12 @@ def update_brand_chart(
     # Handle double metric
     metrics = metric.split()
     # Apply proper formatting
-    main_data = (
-        metric + "/день" if len(metrics) == 1 else [m + "/день" for m in metrics]
-    )
+    if len(metrics) == 1:
+        main_data = metric + "/день"
+    else:
+        metric = main_data = "Коэффициент удовлетворения запросов"
+        # Use mean for aggregation
+        agg_m = "mean" if agg_m == "sum" else agg_m
 
     # Group by brand and month
     prep = df.groupby(["Бренд", pd.Grouper(key="Дата", freq="M")], as_index=False)[

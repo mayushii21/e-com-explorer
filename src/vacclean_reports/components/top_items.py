@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 from dash import dash_table, dcc
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output
 from dash_bootstrap_templates import ThemeChangerAIO, template_from_url
 
 from vacclean_reports.components.decorators import callback, data_access
@@ -56,9 +56,12 @@ def update_items_chart_n_table(
     # Handle double metric
     metrics = metric.split()
     # Apply proper formatting
-    main_data = (
-        metric + "/день" if len(metrics) == 1 else [m + "/день" for m in metrics]
-    )
+    if len(metrics) == 1:
+        main_data = metric + "/день"
+    else:
+        metric = main_data = "Коэффициент удовлетворения запросов"
+        # Use mean for aggregation
+        agg_m = "mean" if agg_m == "sum" else agg_m
 
     # Group by month and sku
     prep = df.groupby(["SKU", pd.Grouper(key="Дата", freq="M")], as_index=False)[

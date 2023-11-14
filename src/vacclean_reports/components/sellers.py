@@ -42,9 +42,12 @@ def update_sellers_chart(
     # Handle double metric
     metrics = metric.split()
     # Apply proper formatting
-    main_data = (
-        metric + "/день" if len(metrics) == 1 else [m + "/день" for m in metrics]
-    )
+    if len(metrics) == 1:
+        main_data = metric + "/день"
+    else:
+        metric = main_data = "Коэффициент удовлетворения запросов"
+        # Use mean for aggregation
+        agg_m = "mean" if agg_m == "sum" else agg_m
 
     # Group by seller and month
     prep = df.groupby(["Продавец", pd.Grouper(key="Дата", freq="M")], as_index=False)[
@@ -99,9 +102,12 @@ def update_sellers_n_sku_chart(
     # Handle double metric
     metrics = metric.split()
     # Apply proper formatting
-    main_data = (
-        metric + "/день" if len(metrics) == 1 else [m + "/день" for m in metrics]
-    )
+    if len(metrics) == 1:
+        main_data = metric + "/день"
+    else:
+        metric = main_data = "Коэффициент удовлетворения запросов"
+        # Use mean for aggregation
+        agg_m = "mean" if agg_m == "sum" else agg_m
 
     # Group by seller and SKU
     prep = df.groupby(["Продавец", "SKU"], as_index=False)[main_data].agg(agg_m)
