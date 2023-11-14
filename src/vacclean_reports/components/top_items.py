@@ -53,24 +53,24 @@ def update_items_chart_n_table(
     agg_m,
     theme,
 ):
-    # # Handle double metric
-    # metrics = metric.split()
-    # # Apply proper formatting
-    # main_data = (
-    #     metric + "/день" if len(metrics) == 1 else [m + "/день" for m in metrics]
-    # )
+    # Handle double metric
+    metrics = metric.split()
+    # Apply proper formatting
+    main_data = (
+        metric + "/день" if len(metrics) == 1 else [m + "/день" for m in metrics]
+    )
 
     # Group by month and sku
     prep = df.groupby(["SKU", pd.Grouper(key="Дата", freq="M")], as_index=False)[
-        "Продажи/день"
-    ].sum()
+        main_data
+    ].agg(agg_m)
     # Pivot months to columns
-    prep = prep.pivot(index="SKU", columns="Дата", values="Продажи/день")
+    prep = prep.pivot(index="SKU", columns="Дата", values=main_data)
     # Set month names
     months = ["Aug.", "Sept.", "Oct."]
     prep.columns = months
     # Calculate totals and sort
-    prep["Total"] = prep.sum(axis=1)
+    prep["Total"] = prep.agg(agg_m, axis=1)
     prep.sort_values(by="Total", ascending=False, inplace=True)
     prep.reset_index(inplace=True)
     # Add item names
@@ -88,8 +88,7 @@ def update_items_chart_n_table(
         prep[prep.Total != 0],
         x=prep.loc[prep.Total != 0, "SKU"],
         y=months,
-        labels={"value": "Продаж", "x": "SKU"},
-        title="Сумма продаж по товарам",
+        labels={"value": metric, "x": "SKU"},
         barmode="stack",
         template=template_from_url(theme),
     )
