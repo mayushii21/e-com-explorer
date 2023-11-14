@@ -11,7 +11,8 @@ def top_sellers_chart():
     return dcc.Graph(
         id="top-sellers-chart",
         # config={"modeBarButtonsToRemove": ["select2d", "lasso2d", "zoom"]},
-        # responsive=True,
+        responsive=True,
+        style={"height": "90vh"},
     )
 
 
@@ -19,7 +20,8 @@ def top_sellers_n_sku_chart():
     return dcc.Graph(
         id="top-sellers-n-sku-chart",
         # config={"modeBarButtonsToRemove": ["select2d", "lasso2d", "zoom"]},
-        # responsive=True,
+        responsive=True,
+        style={"height": "90vh"},
     )
 
 
@@ -67,24 +69,15 @@ def update_sellers_chart(
         title="Лидеры по продажам",
         template=template_from_url(theme),
     )
-    fig.update_layout(legend_title="Months")
-
-    # # Plot chart with applied filter for chosen metric
-    # fig = px.line(
-    #     df[filt].groupby("Дата", as_index=False)[main_data].agg(agg_m),
-    #     x="Дата",
-    #     y=main_data,
-    #     labels={"value": ""},
-    #     template=template_from_url(theme),
-    # )
-    # # Remove excessive margins
-    # fig.update_layout(
-    #     margin=dict(
-    #         l=0,
-    #         r=0,
-    #         b=0,
-    #     )
-    # )
+    fig.update_layout(
+        legend_title="Months",
+        margin=dict(
+            l=0,
+            r=0,
+            t=50,
+            b=10,
+        ),
+    )
 
     return fig
 
@@ -128,5 +121,14 @@ def update_sellers_n_sku_chart(
         template=template_from_url(theme),
     )
     fig.update_traces(textinfo="label+value", insidetextorientation="horizontal")
+    # Remove excessive margins
+    fig.update_layout(
+        margin=dict(
+            l=0,
+            r=0,
+            t=50,
+            b=10,
+        )
+    )
 
     return fig
