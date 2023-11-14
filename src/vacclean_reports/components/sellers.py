@@ -66,7 +66,7 @@ def update_sellers_chart(
         y="Продавец",
         orientation="h",
         labels={"value": metric, "Продавец": ""},
-        title="Лидеры по продажам",
+        # title="Топ продавцы",
         template=template_from_url(theme),
     )
     fig.update_layout(
@@ -96,13 +96,20 @@ def update_sellers_n_sku_chart(
     agg_m,
     theme,
 ):
+    # Handle double metric
+    metrics = metric.split()
+    # Apply proper formatting
+    main_data = (
+        metric + "/день" if len(metrics) == 1 else [m + "/день" for m in metrics]
+    )
+
     # Group by seller and SKU
-    prep = df.groupby(["Продавец", "SKU"], as_index=False)["Продажи/день"].sum()
+    prep = df.groupby(["Продавец", "SKU"], as_index=False)[main_data].agg(agg_m)
     # Add total by seller
-    prep["total"] = prep.groupby("Продавец")["Продажи/день"].transform("sum")
+    prep["total"] = prep.groupby("Продавец")[main_data].transform(agg_m)
     # Sort for unique
     prep.sort_values(by="total", ascending=False, inplace=True)
-    prep.rename(columns={"Продажи/день": "Продаж"}, inplace=True)
+    prep.rename(columns={main_data: metric}, inplace=True)
     # Add item names
     prep = prep.join(
         df[["SKU", "Название"]]
@@ -111,12 +118,11 @@ def update_sellers_n_sku_chart(
         on="SKU",
         how="left",
     )
-    # display(prep[prep['total'].isin(prep["total"].unique()[:10])])
     fig = px.sunburst(
         prep[prep["total"].isin(prep["total"].unique()[:10])],
         path=["Продавец", "SKU"],
-        values="Продаж",
-        title="Топ 10 продавцов и их пылесосы",
+        values=metric,
+        title="Топ продавцы и их товары",
         hover_name="Название",
         template=template_from_url(theme),
     )
