@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 # Construct the absolute path to the files
@@ -48,3 +49,10 @@ def load_files(files, df: pd.DataFrame = None) -> pd.DataFrame:
 
 
 data = load_files(files)
+
+# Calculate availability
+data["Коэффициент удовлетворения запросов"] = (
+    data["Остатки/день"] / data["Запросы/день"]
+)
+# Replace infinity with 1 (full availability)
+data = data.replace(np.inf, 1)
