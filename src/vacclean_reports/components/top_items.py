@@ -11,7 +11,8 @@ def top_items_chart():
     return dcc.Graph(
         id="top-items-chart",
         # config={"modeBarButtonsToRemove": ["select2d", "lasso2d", "zoom"]},
-        # responsive=True,
+        responsive=True,
+        style={"height": "90vh"},
     )
 
 
@@ -99,22 +100,5 @@ def update_items_chart_n_table(
         template=template_from_url(theme),
     )
     fig.update_layout(legend_title="Months")
-
-    # # Plot chart with applied filter for chosen metric
-    # fig = px.line(
-    #     df[filt].groupby("Дата", as_index=False)[main_data].agg(agg_m),
-    #     x="Дата",
-    #     y=main_data,
-    #     labels={"value": ""},
-    #     template=template_from_url(theme),
-    # )
-    # # Remove excessive margins
-    # fig.update_layout(
-    #     margin=dict(
-    #         l=0,
-    #         r=0,
-    #         b=0,
-    #     )
-    # )
 
     return fig, prep[[prep.columns[-1]] + list(prep.columns[:-1])].to_dict("records")
