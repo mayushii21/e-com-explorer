@@ -17,29 +17,22 @@ def top_items_chart():
 
 
 # This DataTable contains monthly metrics for all items
-def table_info():
+@data_access
+def table_info(df):
     return dash_table.DataTable(
         id="items-table",
-        # style_cell={
-        #     "font_size": "12px",
-        #     "textAlign": "right",
-        #     "padding-right": "7px",
-        # },
-        # style_cell_conditional=[
-        #     {
-        #         "if": {"column_id": "symbol"},
-        #         "textAlign": "left",
-        #         "padding-left": "7px",
-        #     },
-        #     {"if": {"column_id": ["price", "90-day corr"]}, "width": "30%"},
-        # ],
-        # style_header={"backgroundColor": "rgba(0,0,0,0)"},
-        # style_data={"backgroundColor": "rgba(0,0,0,0)"},
-        # style_table={
-        #     # "height": "calc(100vh)",
-        #     "height": "calc(100vh - 2em - (10.6em * 1.5) - 1.7em - 300px)",
-        #     "overflowY": "auto",
-        # },
+        style_cell_conditional=[
+            {"if": {"column_id": "Название"}, "textAlign": "left", "width": "30%"},
+        ],
+        style_table={
+            "height": "90vh",
+            "overflowY": "auto",
+        },
+        fixed_rows={
+            "headers": True,
+        },
+        sort_action="native",
+        filter_action="native",
         style_as_list_view=True,
     )
 
@@ -48,6 +41,7 @@ def table_info():
 @callback(
     Output("top-items-chart", "figure"),
     Output("items-table", "data"),
+    Output("items-table", "columns"),
     Input("metric-radio", "value"),
     Input("agg-dd", "value"),
     Input(ThemeChangerAIO.ids.radio("theme"), "value"),
@@ -101,4 +95,11 @@ def update_items_chart_n_table(
     )
     fig.update_layout(legend_title="Months")
 
-    return fig, prep[[prep.columns[-1]] + list(prep.columns[:-1])].to_dict("records")
+    return (
+        fig,
+        prep[[prep.columns[-1]] + list(prep.columns[:-1])].to_dict("records"),
+        [
+            {"name": col, "id": col}
+            for col in [prep.columns[-1]] + list(prep.columns[:-1])
+        ],
+    )
