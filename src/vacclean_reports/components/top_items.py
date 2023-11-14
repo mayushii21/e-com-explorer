@@ -16,8 +16,7 @@ def top_items_chart():
 
 
 # This DataTable contains monthly metrics for all items
-@data_access
-def table_info(df):
+def table_info():
     return dash_table.DataTable(
         id="items-table",
         style_cell_conditional=[
@@ -96,6 +95,7 @@ def update_items_chart_n_table(
         x=prep.loc[prep.Total != 0, "SKU"],
         y=months,
         labels={"value": metric, "x": "SKU"},
+        hover_name="Название",
         barmode=mode,
         template=template_from_url(theme),
     )
