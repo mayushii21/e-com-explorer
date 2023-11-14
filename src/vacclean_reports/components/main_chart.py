@@ -100,7 +100,6 @@ def update_metric_radio(agg_m, val):
 def main_chart():
     return dcc.Graph(
         id="main-chart",
-        # config={"modeBarButtonsToRemove": ["select2d", "lasso2d", "zoom"]},
         responsive=True,
         style={"height": "85vh"},
     )
