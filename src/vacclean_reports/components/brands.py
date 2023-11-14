@@ -30,24 +30,24 @@ def update_brand_chart(
     agg_m,
     theme,
 ):
-    # # Handle double metric
-    # metrics = metric.split()
-    # # Apply proper formatting
-    # main_data = (
-    #     metric + "/день" if len(metrics) == 1 else [m + "/день" for m in metrics]
-    # )
+    # Handle double metric
+    metrics = metric.split()
+    # Apply proper formatting
+    main_data = (
+        metric + "/день" if len(metrics) == 1 else [m + "/день" for m in metrics]
+    )
 
     # Group by brand and month
     prep = df.groupby(["Бренд", pd.Grouper(key="Дата", freq="M")], as_index=False)[
-        "Выручка/день"
-    ].mean()
+        main_data
+    ].agg(agg_m)
     # Pivot months to columns
-    prep = prep.pivot(index="Бренд", columns="Дата", values="Выручка/день")
+    prep = prep.pivot(index="Бренд", columns="Дата", values=main_data)
     # Rename months
     months = ["Aug.", "Sept.", "Oct."]
     prep.columns = months
     # Calculate and sort by total
-    prep["Total"] = prep.mean(axis=1)
+    prep["Total"] = prep.agg(agg_m, axis=1)
     prep.sort_values(by="Total", ascending=False, inplace=True)
     prep.reset_index(inplace=True)
     # Plot
@@ -55,8 +55,7 @@ def update_brand_chart(
         prep[prep.Total != 0],
         x="Бренд",
         y=months,
-        labels={"value": "Выручка", "x": "SKU"},
-        title="Ср. выручка/день по брендам и месяцам",
+        labels={"value": metric, "x": "SKU"},
         barmode="overlay",
         template=template_from_url(theme),
     )
