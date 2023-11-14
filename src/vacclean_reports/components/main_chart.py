@@ -101,7 +101,8 @@ def main_chart():
     return dcc.Graph(
         id="main-chart",
         # config={"modeBarButtonsToRemove": ["select2d", "lasso2d", "zoom"]},
-        # responsive=True,
+        responsive=True,
+        style={"height": "85vh"},
     )
 
 
