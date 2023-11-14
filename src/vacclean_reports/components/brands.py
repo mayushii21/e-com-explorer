@@ -10,7 +10,6 @@ from vacclean_reports.components.decorators import callback, data_access
 def top_brands_chart():
     return dcc.Graph(
         id="top-brands-chart",
-        # config={"modeBarButtonsToRemove": ["select2d", "lasso2d", "zoom"]},
         responsive=True,
         style={"height": "90vh"},
     )
@@ -21,6 +20,7 @@ def top_brands_chart():
     Output("top-brands-chart", "figure"),
     Input("metric-radio", "value"),
     Input("agg-dd", "value"),
+    Input("toggle", "value"),
     Input(ThemeChangerAIO.ids.radio("theme"), "value"),
 )
 @data_access
@@ -28,6 +28,7 @@ def update_brand_chart(
     df,
     metric,
     agg_m,
+    toggle,
     theme,
 ):
     # Handle double metric
@@ -39,6 +40,9 @@ def update_brand_chart(
         metric = main_data = "Коэффициент удовлетворения запросов"
         # Use mean for aggregation
         agg_m = "mean" if agg_m == "sum" else agg_m
+
+    # Set barmode
+    mode = "group" if toggle else "stack" if agg_m == "sum" else "overlay"
 
     # Group by brand and month
     prep = df.groupby(["Бренд", pd.Grouper(key="Дата", freq="M")], as_index=False)[
@@ -59,7 +63,7 @@ def update_brand_chart(
         x="Бренд",
         y=months,
         labels={"value": metric, "x": "SKU"},
-        barmode="overlay",
+        barmode=mode,
         template=template_from_url(theme),
     )
     fig.update_layout(legend_title="Months")
