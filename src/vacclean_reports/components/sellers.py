@@ -39,33 +39,33 @@ def update_sellers_chart(
     agg_m,
     theme,
 ):
-    # # Handle double metric
-    # metrics = metric.split()
-    # # Apply proper formatting
-    # main_data = (
-    #     metric + "/день" if len(metrics) == 1 else [m + "/день" for m in metrics]
-    # )
+    # Handle double metric
+    metrics = metric.split()
+    # Apply proper formatting
+    main_data = (
+        metric + "/день" if len(metrics) == 1 else [m + "/день" for m in metrics]
+    )
 
     # Group by seller and month
     prep = df.groupby(["Продавец", pd.Grouper(key="Дата", freq="M")], as_index=False)[
-        "Продажи/день"
-    ].sum()
+        main_data
+    ].agg(agg_m)
     # Pivot months to columns
-    prep = prep.pivot(index="Продавец", columns="Дата", values="Продажи/день")
+    prep = prep.pivot(index="Продавец", columns="Дата", values=main_data)
     # Set month names
     months = ["Aug.", "Sept.", "Oct."]
     prep.columns = months
     # Calculate totals and sort
-    prep["Total"] = prep.sum(axis=1)
+    prep["Total"] = prep.agg(agg_m, axis=1)
     prep.sort_values(by="Total", inplace=True)
     prep.reset_index(inplace=True)
     # Plot
     fig = px.bar(
-        prep[prep.Total != 0],
+        prep.tail(40),
         x=months,
         y="Продавец",
         orientation="h",
-        labels={"value": "Продаж"},
+        labels={"value": metric, "Продавец": ""},
         title="Лидеры по продажам",
         template=template_from_url(theme),
     )
