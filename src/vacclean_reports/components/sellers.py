@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 from dash import dcc
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output
 from dash_bootstrap_templates import ThemeChangerAIO, template_from_url
 
 from vacclean_reports.components.decorators import callback, data_access
@@ -10,7 +10,6 @@ from vacclean_reports.components.decorators import callback, data_access
 def top_sellers_chart():
     return dcc.Graph(
         id="top-sellers-chart",
-        # config={"modeBarButtonsToRemove": ["select2d", "lasso2d", "zoom"]},
         responsive=True,
         style={"height": "90vh"},
     )
@@ -19,7 +18,6 @@ def top_sellers_chart():
 def top_sellers_n_sku_chart():
     return dcc.Graph(
         id="top-sellers-n-sku-chart",
-        # config={"modeBarButtonsToRemove": ["select2d", "lasso2d", "zoom"]},
         responsive=True,
         style={"height": "90vh"},
     )
@@ -30,6 +28,7 @@ def top_sellers_n_sku_chart():
     Output("top-sellers-chart", "figure"),
     Input("metric-radio", "value"),
     Input("agg-dd", "value"),
+    Input("toggle", "value"),
     Input(ThemeChangerAIO.ids.radio("theme"), "value"),
 )
 @data_access
@@ -37,6 +36,7 @@ def update_sellers_chart(
     df,
     metric,
     agg_m,
+    toggle,
     theme,
 ):
     # Handle double metric
@@ -48,6 +48,9 @@ def update_sellers_chart(
         metric = main_data = "Коэффициент удовлетворения запросов"
         # Use mean for aggregation
         agg_m = "mean" if agg_m == "sum" else agg_m
+
+    # Set barmode
+    mode = "group" if toggle else "stack" if agg_m == "sum" else "overlay"
 
     # Group by seller and month
     prep = df.groupby(["Продавец", pd.Grouper(key="Дата", freq="M")], as_index=False)[
@@ -69,7 +72,7 @@ def update_sellers_chart(
         y="Продавец",
         orientation="h",
         labels={"value": metric, "Продавец": ""},
-        # title="Топ продавцы",
+        barmode=mode,
         template=template_from_url(theme),
     )
     fig.update_layout(
