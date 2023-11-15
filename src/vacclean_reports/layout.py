@@ -32,7 +32,7 @@ app.layout = dbc.Container(
                 dbc.Col(element_dd(), width=4),
             ],
             align="center",
-            style={"position": "sticky", "top": 0, "zIndex": 1},
+            style={"position": "sticky", "top": 0, "zIndex": 999},
             className="bg-body",  # remove transparency of row
         ),
         # First chart
@@ -69,7 +69,7 @@ app.layout = dbc.Container(
                 dbc.Col(toggle(), width=3),
             ],
             justify="between",
-            style={"position": "sticky", "bottom": 0, "zIndex": 1},
+            style={"position": "sticky", "bottom": 0, "zIndex": 999},
         ),
     ],
     fluid=True,
