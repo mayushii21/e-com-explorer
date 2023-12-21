@@ -1,5 +1,5 @@
 [project]
-name = "vacclean-reports"
+name = "e-com-explorer"
 version = "0.0.1"
 description = ""
 authors = [
@@ -25,4 +25,4 @@ requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
 [project.scripts]
-vacrep = 'vacclean_reports.run:main'
+ecomxplor = "ecom_explorer.run:main"
