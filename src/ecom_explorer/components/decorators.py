@@ -1,5 +1,5 @@
-from vacclean_reports.app import app
-from vacclean_reports.data_ops import data
+from ecom_explorer.app import app
+from ecom_explorer.data_ops import data
 
 
 # Define a decorator which passes the data_instance as the first parameter

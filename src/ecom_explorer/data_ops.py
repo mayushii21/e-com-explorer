@@ -5,9 +5,9 @@ import pandas as pd
 
 # Construct the absolute path to the files
 files = [
-    "WB - пылесос для мебели - 01082023 - 31082023.xlsx",
-    "WB - пылесос для мебели - 01092023 - 30092023.xlsx",
-    "WB - пылесос для мебели - 01102023 - 30102023.xlsx",
+    "WB - example - 01082023 - 31082023.xlsx",
+    "WB - example - 01092023 - 30092023.xlsx",
+    "WB - example - 01102023 - 30102023.xlsx",
 ]
 
 

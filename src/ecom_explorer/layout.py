@@ -1,21 +1,18 @@
 import dash_bootstrap_components as dbc
 from dash import html
 
-from vacclean_reports.app import app
-from vacclean_reports.components.brands import top_brands_chart
-from vacclean_reports.components.main_chart import (
+from ecom_explorer.app import app
+from ecom_explorer.components.brands import top_brands_chart
+from ecom_explorer.components.main_chart import (
     agg_dd,
     element_dd,
     main_chart,
     metric_radio,
 )
-from vacclean_reports.components.sellers import (
-    top_sellers_chart,
-    top_sellers_n_sku_chart,
-)
-from vacclean_reports.components.themes import theme_changer
-from vacclean_reports.components.toggle import toggle
-from vacclean_reports.components.top_items import table_info, top_items_chart
+from ecom_explorer.components.sellers import top_sellers_chart, top_sellers_n_sku_chart
+from ecom_explorer.components.themes import theme_changer
+from ecom_explorer.components.toggle import toggle
+from ecom_explorer.components.top_items import table_info, top_items_chart
 
 # Pool (combine) the layout
 app.layout = dbc.Container(

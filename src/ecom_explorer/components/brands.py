@@ -4,7 +4,7 @@ from dash import dcc
 from dash.dependencies import Input, Output
 from dash_bootstrap_templates import ThemeChangerAIO, template_from_url
 
-from vacclean_reports.components.decorators import callback, data_access
+from ecom_explorer.components.decorators import callback, data_access
 
 
 def top_brands_chart():

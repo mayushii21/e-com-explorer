@@ -10,5 +10,5 @@ dbc_css = (
 app = Dash(
     __name__,
     external_stylesheets=[default_theme, dbc_css],
-    title="vacclean_reports",
+    title="ecom_explorer",
 )
