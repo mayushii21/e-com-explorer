@@ -131,7 +131,7 @@ def update_sellers_n_sku_chart(
         prep[prep["total"].isin(prep["total"].unique()[:10])],
         path=["Продавец", "SKU"],
         values=metric,
-        title="Топ продавцы и их товары",
+        title="Top sellers and their products",
         hover_name="Название",
         template=template_from_url(theme),
     )
