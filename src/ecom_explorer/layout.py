@@ -18,9 +18,7 @@ from ecom_explorer.components.top_items import table_info, top_items_chart
 app.layout = dbc.Container(
     [
         # Title row
-        dbc.Row(
-            dbc.Col(html.H1("Wildberries Dashboard", style={"textAlign": "center"}))
-        ),
+        dbc.Row(dbc.Col(html.H1("E-Com Explorer", style={"textAlign": "center"}))),
         # Sticky row with selection options
         dbc.Row(
             [
@@ -43,7 +41,7 @@ app.layout = dbc.Container(
                     [
                         dbc.AccordionItem(
                             table_info(),
-                            title="Таблица топ товаров",
+                            title="Table of top products",
                         ),
                     ],
                     start_collapsed=True,
