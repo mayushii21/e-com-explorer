@@ -60,7 +60,7 @@ def update_element_dd(val):
 # Metric selection
 def metric_radio():
     return dcc.RadioItems(
-        value="Выручка",
+        value="Revenue",
         id="metric-radio",
         inline=True,
         labelStyle={
@@ -83,17 +83,17 @@ def metric_radio():
 def update_metric_radio(agg_m, val):
     if agg_m == "sum":
         return [
-            {"label": "Выручка", "value": "Выручка"},
-            {"label": "Продажи", "value": "Продажи"},
-            {"label": "Цена", "value": "Цена", "disabled": True},
-            {"label": "Запросы и Остатки", "value": "Запросы Остатки"},
-        ], val if val != "Цена" else "Выручка"
+            {"label": "Revenue", "value": "Выручка"},
+            {"label": "Sales", "value": "Продажи"},
+            {"label": "Price", "value": "Цена", "disabled": True},
+            {"label": "Demand & Stock", "value": "Запросы Остатки"},
+        ], val if val != "Price" else "Revenue"
     else:
         return [
-            {"label": "Выручка", "value": "Выручка"},
-            {"label": "Продажи", "value": "Продажи"},
-            {"label": "Цена", "value": "Цена"},
-            {"label": "Запросы и Остатки", "value": "Запросы Остатки"},
+            {"label": "Revenue", "value": "Выручка"},
+            {"label": "Sales", "value": "Продажи"},
+            {"label": "Price", "value": "Цена"},
+            {"label": "Demand & Stock", "value": "Запросы Остатки"},
         ], val
 
 
