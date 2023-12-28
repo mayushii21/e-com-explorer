@@ -11,9 +11,9 @@ def agg_dd():
     return dcc.Dropdown(
         id="agg-dd",
         options=[
-            {"label": "Общ. (сумма)", "value": "sum"},
-            {"label": "Среднее", "value": "mean"},
-            {"label": "Медиана", "value": "median"},
+            {"label": "Total (sum)", "value": "sum"},
+            {"label": "Mean", "value": "mean"},
+            {"label": "Median", "value": "median"},
         ],
         value="mean",
         clearable=False,
@@ -33,7 +33,7 @@ def element_dd(data):
         id="element-dd",
         # Generate options with "all" as the first value
         options=[
-            {"label": "Все", "value": "all"},
+            {"label": "All", "value": "all"},
         ]
         + [
             {"label": name, "value": sku}
@@ -60,7 +60,7 @@ def update_element_dd(val):
 # Metric selection
 def metric_radio():
     return dcc.RadioItems(
-        value="Revenue",
+        value="Выручка",
         id="metric-radio",
         inline=True,
         labelStyle={
@@ -87,7 +87,7 @@ def update_metric_radio(agg_m, val):
             {"label": "Sales", "value": "Продажи"},
             {"label": "Price", "value": "Цена", "disabled": True},
             {"label": "Demand & Stock", "value": "Запросы Остатки"},
-        ], val if val != "Price" else "Revenue"
+        ], val if val != "Price" else "Выручка"
     else:
         return [
             {"label": "Revenue", "value": "Выручка"},
