@@ -4,6 +4,15 @@
     <img src="docs/main.png">
 </div>
 
+<details>
+    <summary>Expand Gallery</summary>
+    <img src="docs/1.png">
+    <img src="docs/2.png">
+    <img src="docs/3.png">
+    <img src="docs/4.png">
+    <img src="docs/5.png">
+</details>
+
 Welcome to E-Com Explorer, the ultimate analytical tool designed to redefine how you analyze marketplace data.
 
 E-Com Explorer was created to solve common challenges faced by businesses in monitoring and optimizing their online marketplace presence. By consolidating critical sales and stock data into one user-friendly platform, it enhances product performance tracking, simplifies the complexity of data analysis with intuitive visualizations, and supports strategic decision-making with interactive charts and metrics.
